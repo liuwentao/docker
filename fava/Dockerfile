@@ -7,7 +7,7 @@ RUN apk add --update libxml2-dev libxslt-dev gcc musl-dev g++
 RUN pip install --prefix="/install" fava
 
 FROM python:alpine
-
+MAINTAINER liuwentao@gmail.com
 COPY --from=builder /install /usr/local
 
 ENV BEANCOUNT_FILE ""
