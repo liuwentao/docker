@@ -1,0 +1,14 @@
+#! /usr/bin/with-contenv bash
+
+#启动 discosrv
+while [ ! -f "/config/certs/cert.pem" ] || [ ! -f "/config/certs/key.pem" ]
+do
+   sleep 5
+done
+
+if [ -z $ENABLE_HTTP ];then
+	echo "not exists"
+   exec s6-setuidgid stsrv /usr/local/bin/discosrv  -db-dir="/config/discosrvdb" -http -listen=":8000"  ${DISCO_OTHER_OPTION} 
+else
+	exec s6-setuidgid stsrv /usr/local/bin/discosrv  -db-dir="/config/discosrvdb" -cert="/config/certs/cert.pem" -key="/config/certs/key.pem"  ${DISCO_OTHER_OPTION} 
+fi
